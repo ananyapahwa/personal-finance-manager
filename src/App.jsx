@@ -65,7 +65,7 @@ const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeTab, setActiveTab] = useState('dashboard');
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [transactions, setTransactions] = useState(INITIAL_TRANSACTIONS);
+  const [transactions, setTransactions] = useState([]);
   const [savings, setSavings] = useState(INITIAL_SAVINGS);
   const [darkMode, setDarkMode] = useState(() => {
     const savedMode = localStorage.getItem('darkMode');
@@ -98,12 +98,32 @@ const App = () => {
     }
   };
 
+  const fetchTransactions = async () => {
+    const token = localStorage.getItem('token') || sessionStorage.getItem('token');
+    if (!token) return;
+
+    try {
+      const response = await fetch('http://localhost:5000/api/transactions', {
+        headers: {
+          'Authorization': token,
+        },
+      });
+      if (response.ok) {
+        const data = await response.json();
+        setTransactions(data);
+      }
+    } catch (error) {
+      console.error('Error fetching transactions:', error);
+    }
+  };
+
   // Check if user is already logged in (from localStorage or sessionStorage)
   useEffect(() => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (token) {
       setIsAuthenticated(true);
       fetchGoals();
+      fetchTransactions();
     }
   }, []);
 
@@ -117,6 +137,7 @@ const App = () => {
     }
     setIsAuthenticated(true);
     fetchGoals();
+    fetchTransactions();
     console.log('Login handler called, state updated');
   };
 
@@ -189,6 +210,7 @@ const App = () => {
               <Transactions
                 transactions={transactions}
                 setTransactions={setTransactions}
+                fetchTransactions={fetchTransactions}
                 darkMode={darkMode}
                 setDarkMode={setDarkMode}
               />

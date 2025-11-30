@@ -11,6 +11,49 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
   });
   const [customModal, setCustomModal] = useState({ isOpen: false, goalId: null, amount: '' });
 
+  const colorVariants = {
+    emerald: {
+      iconBg: darkMode ? 'bg-emerald-500/20' : 'bg-emerald-100',
+      iconText: darkMode ? 'text-emerald-400' : 'text-emerald-600',
+      progress: 'from-emerald-500 to-teal-500',
+      text: darkMode ? 'text-emerald-400' : 'text-emerald-600',
+      badge: darkMode ? 'bg-emerald-500/20 text-emerald-400' : 'bg-emerald-100 text-emerald-600',
+      button: darkMode ? 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30' : 'bg-emerald-100 text-emerald-700 border-emerald-200'
+    },
+    blue: {
+      iconBg: darkMode ? 'bg-blue-500/20' : 'bg-blue-100',
+      iconText: darkMode ? 'text-blue-400' : 'text-blue-600',
+      progress: 'from-blue-500 to-indigo-500',
+      text: darkMode ? 'text-blue-400' : 'text-blue-600',
+      badge: darkMode ? 'bg-blue-500/20 text-blue-400' : 'bg-blue-100 text-blue-600',
+      button: darkMode ? 'bg-blue-500/20 text-blue-400 border-blue-500/30' : 'bg-blue-100 text-blue-700 border-blue-200'
+    },
+    purple: {
+      iconBg: darkMode ? 'bg-purple-500/20' : 'bg-purple-100',
+      iconText: darkMode ? 'text-purple-400' : 'text-purple-600',
+      progress: 'from-purple-500 to-fuchsia-500',
+      text: darkMode ? 'text-purple-400' : 'text-purple-600',
+      badge: darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600',
+      button: darkMode ? 'bg-purple-500/20 text-purple-400 border-purple-500/30' : 'bg-purple-100 text-purple-700 border-purple-200'
+    },
+    pink: {
+      iconBg: darkMode ? 'bg-pink-500/20' : 'bg-pink-100',
+      iconText: darkMode ? 'text-pink-400' : 'text-pink-600',
+      progress: 'from-pink-500 to-rose-500',
+      text: darkMode ? 'text-pink-400' : 'text-pink-600',
+      badge: darkMode ? 'bg-pink-500/20 text-pink-400' : 'bg-pink-100 text-pink-600',
+      button: darkMode ? 'bg-pink-500/20 text-pink-400 border-pink-500/30' : 'bg-pink-100 text-pink-700 border-pink-200'
+    },
+    orange: {
+      iconBg: darkMode ? 'bg-orange-500/20' : 'bg-orange-100',
+      iconText: darkMode ? 'text-orange-400' : 'text-orange-600',
+      progress: 'from-orange-500 to-amber-500',
+      text: darkMode ? 'text-orange-400' : 'text-orange-600',
+      badge: darkMode ? 'bg-orange-500/20 text-orange-400' : 'bg-orange-100 text-orange-600',
+      button: darkMode ? 'bg-orange-500/20 text-orange-400 border-orange-500/30' : 'bg-orange-100 text-orange-700 border-orange-200'
+    }
+  };
+
   const fetchGoals = async () => {
     const token = localStorage.getItem('token') || sessionStorage.getItem('token');
     if (!token) return;
@@ -214,6 +257,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
         {savings.map((goal, index) => {
           const percentage = Math.min((goal.current / goal.target) * 100, 100);
           const isComplete = percentage >= 100;
+          const colors = colorVariants[goal.color] || colorVariants.emerald;
 
           return (
             <div
@@ -235,18 +279,13 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
 
               {/* ICON + PERCENTAGE BADGE */}
               <div className="flex justify-between items-start mb-4">
-                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-transform group-hover:scale-110 ${darkMode ? 'bg-slate-700/50' : 'bg-slate-100'
-                  }`}>
+                <div className={`w-16 h-16 rounded-2xl flex items-center justify-center text-3xl transition-transform group-hover:scale-110 ${colors.iconBg} ${colors.iconText}`}>
                   {goal.icon}
                 </div>
 
                 <div className={`px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 ${isComplete
-                  ? darkMode
-                    ? 'bg-emerald-500/20 text-emerald-400'
-                    : 'bg-emerald-100 text-emerald-600'
-                  : darkMode
-                    ? 'bg-blue-500/20 text-blue-400'
-                    : 'bg-blue-100 text-blue-600'
+                  ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-500/20 dark:text-emerald-400'
+                  : colors.badge
                   }`}>
                   {isComplete ? '✓ ' : ''}{Math.round(percentage)}%
                 </div>
@@ -267,8 +306,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
                     Current
                   </p>
                   <p
-                    className={`text-2xl font-bold ${darkMode ? "text-emerald-400" : "text-emerald-600"
-                      }`}
+                    className={`text-2xl font-bold ${colors.text}`}
                   >
                     ${goal.current.toLocaleString()}
                   </p>
@@ -289,7 +327,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
                   }`}
               >
                 <div
-                  className="h-full bg-gradient-to-r from-purple-500 via-pink-500 to-blue-500 rounded-full transition-all duration-700 relative overflow-hidden"
+                  className={`h-full bg-gradient-to-r ${colors.progress} rounded-full transition-all duration-700 relative overflow-hidden`}
                   style={{ width: `${percentage}%` }}
                 >
                   <div className="absolute inset-0 bg-white/30 animate-shimmer"></div>
@@ -297,28 +335,22 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
               </div>
 
               {/* ACTION BUTTONS */}
-              <div className="flex gap-2">
+              <div className="grid grid-cols-3 gap-2">
                 <button
                   onClick={() => addCapital(goal._id, 100)}
-                  className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${darkMode
-                    ? "bg-gradient-to-r from-purple-500/20 to-pink-500/20 border border-purple-500/30 text-white hover:from-purple-500/30 hover:to-pink-500/30"
-                    : "bg-gradient-to-r from-purple-100 to-pink-100 border border-purple-200 text-purple-700 hover:from-purple-200 hover:to-pink-200"
-                    }`}
+                  className={`py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 border ${colors.button}`}
                 >
-                  Add $100
+                  +$100
                 </button>
                 <button
                   onClick={() => addCapital(goal._id, 500)}
-                  className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${darkMode
-                    ? "bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30"
-                    : "bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/20"
-                    }`}
+                  className={`py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 border ${colors.button}`}
                 >
-                  Add $500
+                  +$500
                 </button>
                 <button
                   onClick={() => setCustomModal({ isOpen: true, goalId: goal._id, amount: '' })}
-                  className={`flex-1 py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${darkMode
+                  className={`py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 ${darkMode
                     ? "bg-slate-700 text-slate-300 hover:bg-slate-600"
                     : "bg-slate-100 text-slate-600 hover:bg-slate-200"
                     }`}
