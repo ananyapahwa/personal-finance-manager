@@ -90,6 +90,78 @@ The backend provides the following main API routes:
 - `/api/goals`: Create and track savings goals.
 - `/api/bills`: Manage split bills.
 - `/api/friends`: Manage friends for bill splitting.
+# Data Flow Diagram (DFD) - PaisaPortfolio
+
+This document contains the Level 1 Data Flow Diagram (DFD) for the PaisaPortfolio application, illustrating the flow of data between the user, system processes, and data stores.
+
+```mermaid
+graph TD
+    %% External Entity
+    User[User]
+    
+    %% System Boundary
+    subgraph "PaisaPortfolio System"
+        %% Processes
+        Auth[Authentication Process]
+        Trans[Transaction Management]
+        Goals[Goal Management]
+        Friends[Friend Management]
+        Bills[Bill Management]
+        
+        %% Data Stores
+        UserDB[(User Database)]
+        TransDB[(Transaction Database)]
+        GoalDB[(Goal Database)]
+        FriendDB[(Friend Database)]
+        BillDB[(Bill Database)]
+    end
+
+    %% Data Flows
+    
+    %% Authentication Flow
+    User -->|Register/Login Credentials| Auth
+    Auth -->|Validate/Store User Data| UserDB
+    UserDB -->|User Profile Data| Auth
+    Auth -->|Auth Token & User Info| User
+
+    %% Transaction Flow
+    User -->|Add/Edit/Delete Transaction| Trans
+    Trans -->|Save/Update Transaction| TransDB
+    TransDB -->|Transaction Records| Trans
+    Trans -->|Transaction History & Summary| User
+
+    %% Goal Flow
+    User -->|Set/Update Savings Goal| Goals
+    Goals -->|Save/Update Goal| GoalDB
+    GoalDB -->|Goal Records| Goals
+    Goals -->|Goal Progress Status| User
+
+    %% Friend Flow
+    User -->|Add/Manage Friends| Friends
+    Friends -->|Save/Update Friend| FriendDB
+    FriendDB -->|Friend Records| Friends
+    Friends -->|Friend List| User
+
+    %% Bill Flow
+    User -->|Create/Settle Split Bill| Bills
+    Bills -->|Save/Update Bill| BillDB
+    BillDB -->|Bill Records| Bills
+    Bills -->|Bill Details & Status| User
+    
+    %% Inter-process/store connections (Logical links)
+    Bills -.->|References| FriendDB
+    Trans -.->|Linked to| UserDB
+    Goals -.->|Linked to| UserDB
+```
+
+## Description
+
+1.  **Authentication Process**: Handles user registration and login. It interacts with the **User Database** to store and verify user credentials.
+2.  **Transaction Management**: Manages income and expenses. It stores transaction details in the **Transaction Database** and provides summaries to the user.
+3.  **Goal Management**: Allows users to set financial goals. Data is stored in the **Goal Database**.
+4.  **Friend Management**: Manages the list of friends for splitting bills. Data is stored in the **Friend Database**.
+5.  **Bill Management**: Handles splitting bills among friends. It interacts with the **Bill Database** and references the **Friend Database**.
+
 
 ## 📸 Screenshots
 
