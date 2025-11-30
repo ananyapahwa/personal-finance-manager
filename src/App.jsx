@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Routes, Route, Navigate, useLocation, useNavigate } from 'react-router-dom';
-import { DollarSign, Menu, X } from 'lucide-react';
+import { IndianRupee, Menu, X } from 'lucide-react';
 import Sidebar from './components/Sidebar';
 import Dashboard from './pages/Dashboard';
 import Transactions from './pages/Transactions';
@@ -18,7 +18,7 @@ const ProtectedRoute = ({ children, isAuthenticated }) => {
 };
 
 // Main App Layout
-const AppLayout = ({ children, activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, darkMode, setDarkMode, onLogout }) => {
+const AppLayout = ({ children, activeTab, setActiveTab, isSidebarOpen, setIsSidebarOpen, darkMode, setDarkMode, onLogout, transactions, savings }) => {
   const location = useLocation();
 
   useEffect(() => {
@@ -38,15 +38,17 @@ const AppLayout = ({ children, activeTab, setActiveTab, isSidebarOpen, setIsSide
         darkMode={darkMode}
         toggleTheme={() => setDarkMode(!darkMode)}
         onLogout={onLogout}
+        transactions={transactions}
+        savings={savings}
       />
 
       <main className="flex-1 flex flex-col h-screen overflow-hidden">
         <header className="lg:hidden bg-white dark:bg-slate-800 border-b border-slate-200 dark:border-slate-700 p-4 flex justify-between items-center">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-              <DollarSign size={20} className="text-white" />
+              <IndianRupee size={20} className="text-white" />
             </div>
-            <span className="font-bold">FinTrack</span>
+            <span className="font-bold">PaisaPortfolio</span>
           </div>
           <button onClick={() => setIsSidebarOpen(!isSidebarOpen)} className="p-2">
             {isSidebarOpen ? <X /> : <Menu />}
@@ -182,6 +184,8 @@ const App = () => {
               darkMode={darkMode}
               setDarkMode={setDarkMode}
               onLogout={handleLogout}
+              transactions={transactions}
+              savings={savings}
             >
               <Dashboard
                 transactions={transactions}

@@ -4,7 +4,7 @@ import {
   Wallet,
   PiggyBank,
   Users,
-  DollarSign,
+  IndianRupee,
   Sparkles,
   TrendingUp,
   LogOut,
@@ -12,7 +12,7 @@ import {
 
 import { useNavigate } from 'react-router-dom';
 
-const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleTheme, onLogout }) => {
+const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleTheme, onLogout, transactions = [], savings = [] }) => {
   const navigate = useNavigate();
 
   const menuItems = [
@@ -35,7 +35,7 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleT
       {/* SIDEBAR */}
       <aside
         className={`
-          fixed lg:static inset-y-0 left-0 z-30 w-72 px-3 py-4
+          fixed lg:static inset-y-0 left-0 z-30 w-80 px-4 py-6
           transition-transform duration-300 ease-in-out backdrop-blur-xl shadow-2xl border-r
           ${isOpen ? "translate-x-0" : "-translate-x-full lg:translate-x-0"}
 
@@ -47,7 +47,7 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleT
         {/* LOGO HEADER */}
         <div
           className="
-            p-6 mb-6 rounded-3xl relative overflow-hidden
+            p-5 mb-6 rounded-3xl relative overflow-hidden
             bg-gradient-to-r from-purple-200/50 to-pink-100/40
             dark:bg-gradient-to-r dark:from-purple-900/40 dark:to-slate-900/40
           "
@@ -56,28 +56,29 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleT
           <div className="absolute -right-10 -top-10 w-28 h-28 rounded-full blur-3xl bg-purple-300/30 dark:bg-purple-500/20" />
 
           {/* LOGO */}
-          <div className="relative flex items-center gap-4 z-10">
+          <div className="relative flex items-center gap-2 z-10">
             <div
               className="
-                w-14 h-14 rounded-2xl flex items-center justify-center
+                w-10 h-10 rounded-xl flex items-center justify-center
                 bg-gradient-to-br from-emerald-400 to-teal-500 shadow-xl
                 dark:from-emerald-500 dark:to-teal-500 dark:shadow-emerald-500/40
               "
             >
-              <DollarSign size={28} className="text-white" />
+              <IndianRupee size={20} className="text-white" />
             </div>
 
             <div>
               <h1
                 className="
-                  text-2xl font-bold bg-gradient-to-r bg-clip-text text-transparent
+                  text-lg font-bold bg-gradient-to-r bg-clip-text text-transparent
                   from-emerald-700 to-teal-600
                   dark:from-emerald-400 dark:to-teal-300
+                  tracking-tight whitespace-normal leading-tight
                 "
               >
-                FinTrack
+                Paisa Portfolio
               </h1>
-              <p className="text-slate-700 dark:text-slate-400 text-sm">
+              <p className="text-slate-700 dark:text-slate-400 text-sm mt-1">
                 Financial Manager
               </p>
             </div>
@@ -173,12 +174,12 @@ const Sidebar = ({ activeTab, setActiveTab, isOpen, setIsOpen, darkMode, toggleT
                   className="text-purple-700 dark:text-purple-300"
                 />
                 <span className="text-sm font-semibold text-purple-700 dark:text-purple-300">
-                  Total Balance
+                  Total Savings
                 </span>
               </div>
 
               <p className="text-3xl font-bold text-slate-800 dark:text-white">
-                $14,250.00
+                ₹{savings.reduce((acc, goal) => acc + goal.current, 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </p>
 
               <div className="flex items-center gap-1 text-sm font-semibold text-emerald-700 dark:text-emerald-400">

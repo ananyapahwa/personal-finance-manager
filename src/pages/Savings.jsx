@@ -1,8 +1,16 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Plus, TrendingUp, Sun, Moon, Target, Sparkles, X, Trash2 } from 'lucide-react';
 
 const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
+  const location = useLocation();
   const [showModal, setShowModal] = useState(false);
+
+  useEffect(() => {
+    if (location.state?.openModal) {
+      setShowModal(true);
+    }
+  }, [location.state]);
   const [newGoal, setNewGoal] = useState({
     name: '',
     target: '',
@@ -229,7 +237,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
             </p>
           </div>
           <h3 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-            ${savings.reduce((sum, g) => sum + g.current, 0).toLocaleString()}
+            ₹{savings.reduce((sum, g) => sum + g.current, 0).toLocaleString()}
           </h3>
         </div>
 
@@ -247,7 +255,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
             </p>
           </div>
           <h3 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-            ${savings.reduce((sum, g) => sum + g.target, 0).toLocaleString()}
+            ₹{savings.reduce((sum, g) => sum + g.target, 0).toLocaleString()}
           </h3>
         </div>
       </div>
@@ -308,7 +316,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
                   <p
                     className={`text-2xl font-bold ${colors.text}`}
                   >
-                    ${goal.current.toLocaleString()}
+                    ₹{goal.current.toLocaleString()}
                   </p>
                 </div>
                 <div className="text-right">
@@ -316,7 +324,7 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
                     Target
                   </p>
                   <p className={`text-lg font-semibold ${darkMode ? "text-slate-400" : "text-slate-600"}`}>
-                    ${goal.target.toLocaleString()}
+                    ₹{goal.target.toLocaleString()}
                   </p>
                 </div>
               </div>
@@ -340,13 +348,13 @@ const Savings = ({ savings, setSavings, darkMode, setDarkMode }) => {
                   onClick={() => addCapital(goal._id, 100)}
                   className={`py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 border ${colors.button}`}
                 >
-                  +$100
+                  +₹100
                 </button>
                 <button
                   onClick={() => addCapital(goal._id, 500)}
                   className={`py-3 rounded-xl text-sm font-semibold transition-all duration-300 hover:scale-105 border ${colors.button}`}
                 >
-                  +$500
+                  +₹500
                 </button>
                 <button
                   onClick={() => setCustomModal({ isOpen: true, goalId: goal._id, amount: '' })}

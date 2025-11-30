@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   LayoutDashboard,
   Wallet,
@@ -7,7 +8,7 @@ import {
   Plus,
   TrendingUp,
   TrendingDown,
-  DollarSign,
+  IndianRupee,
   Trash2,
   CheckCircle,
   Menu,
@@ -22,6 +23,26 @@ import {
 } from 'lucide-react';
 
 const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
+  const navigate = useNavigate();
+
+  const handleQuickAction = (action) => {
+    switch (action) {
+      case 'Add Income':
+        navigate('/transactions', { state: { type: 'income' } });
+        break;
+      case 'Add Expense':
+        navigate('/transactions', { state: { type: 'expense' } });
+        break;
+      case 'New Goal':
+        navigate('/savings', { state: { openModal: true } });
+        break;
+      case 'Reports':
+        alert('Reports feature coming soon!');
+        break;
+      default:
+        break;
+    }
+  };
   const totalIncome = transactions.filter(t => t.type === 'income').reduce((acc, curr) => acc + curr.amount, 0);
   const totalExpense = transactions.filter(t => t.type === 'expense').reduce((acc, curr) => acc + curr.amount, 0);
   const balance = totalIncome - totalExpense;
@@ -76,7 +97,7 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
               </div>
               <p className={`text-sm font-medium mb-1 ${darkMode ? 'text-emerald-300/80' : 'text-white/90'}`}>Total Balance</p>
               <h3 className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-white'}`}>
-                ${balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ₹{balance.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h3>
             </div>
           </div>
@@ -96,7 +117,7 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
               </div>
               <p className={`text-sm font-medium mb-1 ${darkMode ? 'text-blue-300/80' : 'text-white/90'}`}>Monthly Income</p>
               <h3 className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-white'}`}>
-                ${totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ₹{totalIncome.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h3>
             </div>
           </div>
@@ -115,7 +136,7 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
               </div>
               <p className={`text-sm font-medium mb-1 ${darkMode ? 'text-rose-300/80' : 'text-white/90'}`}>Monthly Expenses</p>
               <h3 className={`text-4xl font-bold ${darkMode ? 'text-white' : 'text-white'}`}>
-                ${totalExpense.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                ₹{totalExpense.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
               </h3>
             </div>
           </div>
@@ -220,10 +241,10 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
                     </div>
                     <div className="flex justify-between mt-2">
                       <span className={`text-xs ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                        ${goal.current.toLocaleString()}
+                        ₹{goal.current.toLocaleString()}
                       </span>
                       <span className={`text-xs ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                        ${goal.target.toLocaleString()}
+                        ₹{goal.target.toLocaleString()}
                       </span>
                     </div>
                   </div>
@@ -243,6 +264,7 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
           ].map((action, index) => (
             <button
               key={index}
+              onClick={() => handleQuickAction(action.label)}
               className={`p-4 rounded-2xl transition-all duration-300 hover:scale-105 ${darkMode
                 ? `bg-${action.color}-500/20 hover:bg-${action.color}-500/30 border border-${action.color}-500/40 shadow-lg shadow-${action.color}-500/10`
                 : `bg-white hover:bg-${action.color}-50 border border-transparent hover:border-${action.color}-200 shadow-lg hover:shadow-xl`

@@ -1,14 +1,22 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Wallet, TrendingUp, Trash2, Moon, Sun, Plus } from 'lucide-react';
 import { CATEGORIES } from '../data/mockData';
 
 const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMode, setDarkMode }) => {
+  const location = useLocation();
   const [newTx, setNewTx] = useState({
     title: '',
     amount: '',
     category: 'food',
     type: 'expense'
   });
+
+  useEffect(() => {
+    if (location.state?.type) {
+      setNewTx(prev => ({ ...prev, type: location.state.type }));
+    }
+  }, [location.state]);
 
   const handleAdd = async (e) => {
     e.preventDefault();
@@ -143,7 +151,7 @@ const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMo
                     className={`absolute left-4 top-3 ${darkMode ? 'text-slate-400' : 'text-slate-400'
                       }`}
                   >
-                    $
+                    ₹
                   </span>
                   <input
                     type="number"
@@ -289,7 +297,7 @@ const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMo
                         : 'text-slate-700'
                       }`}
                   >
-                    {t.type === 'income' ? '+' : '-'}${t.amount.toFixed(2)}
+                    {t.type === 'income' ? '+' : '-'}₹{t.amount.toFixed(2)}
                   </span>
 
                   <button

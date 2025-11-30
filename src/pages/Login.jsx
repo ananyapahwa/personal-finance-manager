@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { DollarSign, User, Mail, Lock, Eye, EyeOff, Sun, Moon } from 'lucide-react';
+import { IndianRupee, User, Mail, Lock, Eye, EyeOff, Sun, Moon } from 'lucide-react';
 
 const Login = ({ onLogin, darkMode, toggleTheme }) => {
   const [isLogin, setIsLogin] = useState(true);
@@ -59,9 +59,9 @@ const Login = ({ onLogin, darkMode, toggleTheme }) => {
             <div className="animate-slideInLeft">
               <div className="flex items-center gap-3 mb-8">
                 <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                  <DollarSign className="w-8 h-8 text-pink-500" />
+                  <IndianRupee className="w-8 h-8 text-pink-500" />
                 </div>
-                <h1 className="text-3xl font-bold text-white">FinTrack</h1>
+                <h1 className="text-3xl font-bold text-white">PaisaPortfolio</h1>
               </div>
               <p className="text-white text-sm opacity-90">Financial Manager</p>
             </div>
@@ -72,7 +72,7 @@ const Login = ({ onLogin, darkMode, toggleTheme }) => {
                 <div className="text-center">
                   <div className="mb-6">
                     <div className="w-64 h-64 mx-auto bg-white/20 rounded-full flex items-center justify-center backdrop-blur-sm">
-                      <DollarSign className="w-32 h-32 text-white" />
+                      <IndianRupee className="w-32 h-32 text-white" />
                     </div>
                   </div>
                   <p className="text-white text-2xl font-bold mb-2">Manage Your Finances</p>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Plus, Sun, Moon, DollarSign, Sparkles, TrendingDown, Calendar } from 'lucide-react';
+import { Users, Plus, Sun, Moon, IndianRupee, Sparkles, TrendingDown, Calendar } from 'lucide-react';
 
 const SplitBill = ({ darkMode, setDarkMode }) => {
   const [friends, setFriends] = useState([]);
@@ -170,7 +170,7 @@ const SplitBill = ({ darkMode, setDarkMode }) => {
             </p>
           </div>
           <h3 className={`text-3xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-            ${totalSplit.toFixed(2)}
+            ₹{totalSplit.toFixed(2)}
           </h3>
         </div>
 
@@ -211,224 +211,280 @@ const SplitBill = ({ darkMode, setDarkMode }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        {/* NEW EXPENSE CARD */}
-        <div className={`rounded-3xl p-8 backdrop-blur-lg ${darkMode
-          ? "bg-slate-800/40 border border-slate-700/50"
-          : "bg-white/80 shadow-xl"
-          }`}>
-          <h3 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-            New Expense
-          </h3>
+      {/* MAIN CONTENT GRID */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
 
-          <div className="space-y-6">
-            <div>
-              <label className={`block text-sm font-semibold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Description
-              </label>
-              <input
-                value={description}
-                onChange={(e) => setDescription(e.target.value)}
-                className={`w-full p-4 rounded-2xl transition-all ${darkMode
-                  ? 'bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:border-purple-500'
-                  : 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:border-purple-500'
-                  } outline-none`}
-                placeholder="e.g. Friday Dinner"
-              />
-            </div>
+        {/* LEFT COLUMN - EXPENSE FORM (7 cols) */}
+        <div className="lg:col-span-7 space-y-8">
+          {/* NEW EXPENSE CARD */}
+          <div className={`rounded-3xl p-8 backdrop-blur-lg transition-all duration-300 ${darkMode
+            ? "bg-slate-800/40 border border-slate-700/50"
+            : "bg-white/80 shadow-xl"
+            }`}>
+            <h3 className={`text-xl font-bold mb-6 ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+              New Expense
+            </h3>
 
-            <div>
-              <label className={`block text-sm font-semibold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Total Bill Amount
-              </label>
-              <div className="relative">
-                <span className={`absolute left-5 top-5 text-2xl font-bold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                  $
-                </span>
+            <div className="space-y-6">
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                  Description
+                </label>
                 <input
-                  type="number"
-                  value={billAmount}
-                  onChange={(e) => setBillAmount(e.target.value)}
-                  className={`w-full p-4 pl-12 rounded-2xl text-2xl font-bold transition-all ${darkMode
+                  value={description}
+                  onChange={(e) => setDescription(e.target.value)}
+                  className={`w-full p-4 rounded-2xl transition-all ${darkMode
                     ? 'bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:border-purple-500'
                     : 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:border-purple-500'
                     } outline-none`}
-                  placeholder="0.00"
+                  placeholder="e.g. Friday Dinner"
                 />
+              </div>
+
+              <div>
+                <label className={`block text-sm font-semibold mb-2 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                  Total Bill Amount
+                </label>
+                <div className="relative">
+                  <span className={`absolute left-5 top-5 text-2xl font-bold ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                    ₹
+                  </span>
+                  <input
+                    type="number"
+                    value={billAmount}
+                    onChange={(e) => setBillAmount(e.target.value)}
+                    className={`w-full p-4 pl-12 rounded-2xl text-2xl font-bold transition-all ${darkMode
+                      ? 'bg-slate-700/50 border border-slate-600 text-white placeholder-slate-400 focus:border-purple-500'
+                      : 'bg-slate-50 border border-slate-200 text-slate-800 placeholder-slate-400 focus:border-purple-500'
+                      } outline-none`}
+                    placeholder="0.00"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
+                  Split With
+                </label>
+                <div className="flex flex-wrap gap-2">
+                  <button
+                    onClick={() => toggleFriend('Me')}
+                    className={`h-10 px-4 rounded-xl text-sm font-semibold transition-all duration-300 flex items-center justify-center ${selectedFriends.includes('Me')
+                      ? darkMode
+                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30'
+                        : 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/20'
+                      : darkMode
+                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700'
+                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                      }`}
+                  >
+                    Me
+                  </button>
+                  {selectedFriends.filter(f => f !== 'Me').map((friendName, index) => (
+                    <div
+                      key={index}
+                      className={`h-10 px-4 rounded-xl text-sm font-semibold flex items-center justify-center animate-fade-in ${darkMode
+                        ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 text-emerald-400 border border-emerald-500/30'
+                        : 'bg-emerald-100 text-emerald-700 border border-emerald-200'
+                        }`}
+                    >
+                      {friendName}
+                    </div>
+                  ))}
+                  {selectedFriends.length === 0 && (
+                    <span className={`text-sm italic py-2 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                      Select friends from My Circle →
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
 
-            <div>
-              <label className={`block text-sm font-semibold mb-3 ${darkMode ? 'text-slate-300' : 'text-slate-700'}`}>
-                Split With
-              </label>
-              <div className="flex flex-wrap gap-3">
+            {billAmount && selectedFriends.length > 0 && (
+              <div className={`mt-6 p-5 rounded-2xl transition-all duration-300 animate-fade-in ${darkMode
+                ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30'
+                : 'bg-gradient-to-r from-emerald-100 to-teal-100 border border-emerald-200'
+                }`}>
+                <div className="flex justify-between items-center">
+                  <span className={`text-sm font-semibold ${darkMode ? 'text-emerald-300' : 'text-emerald-800'}`}>
+                    Each person pays
+                  </span>
+                  <span className={`text-3xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                    ₹{(parseFloat(billAmount) / selectedFriends.length).toFixed(2)}
+                  </span>
+                </div>
+              </div>
+            )}
+
+            <button
+              onClick={handleSplit}
+              disabled={!billAmount || selectedFriends.length === 0}
+              className={`w-full mt-6 py-4 rounded-2xl font-bold transition-all duration-300 ${!billAmount || selectedFriends.length === 0
+                ? 'opacity-50 cursor-not-allowed bg-slate-400 text-white'
+                : darkMode
+                  ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30 hover:scale-105'
+                  : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:scale-105'
+                }`}
+            >
+              Split Expense
+            </button>
+          </div>
+        </div>
+
+        {/* RIGHT COLUMN - FRIENDS & HISTORY (5 cols) */}
+        <div className="lg:col-span-5 space-y-8">
+
+          {/* MY CIRCLE (FRIENDS) */}
+          <div className={`rounded-3xl p-6 transition-all duration-300 ${darkMode
+            ? "bg-slate-800/40 border border-slate-700/50"
+            : "bg-white/80 shadow-xl"
+            }`}>
+            <div className="flex justify-between items-center mb-6">
+              <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+                My Circle
+              </h3>
+              <button
+                onClick={() => setShowAddFriend(!showAddFriend)}
+                className={`p-2 rounded-xl transition-all ${darkMode
+                  ? 'bg-purple-500/20 text-purple-400 hover:bg-purple-500/30'
+                  : 'bg-purple-100 text-purple-600 hover:bg-purple-200'}`}
+              >
+                <Plus size={20} />
+              </button>
+            </div>
+
+            {showAddFriend && (
+              <div className="mb-6 flex gap-2 animate-fade-in">
+                <input
+                  type="text"
+                  value={newFriendName}
+                  onChange={(e) => setNewFriendName(e.target.value)}
+                  placeholder="Friend's Name"
+                  className={`flex-1 p-3 rounded-xl outline-none transition-all ${darkMode ? 'bg-slate-700/50 text-white border border-slate-600' : 'bg-slate-50 text-slate-900 border border-slate-200'}`}
+                  onKeyDown={(e) => e.key === 'Enter' && handleAddFriend(e)}
+                />
                 <button
-                  onClick={() => toggleFriend('Me')}
-                  className={`h-12 px-6 rounded-2xl text-sm font-semibold transition-all duration-300 flex items-center justify-center ${selectedFriends.includes('Me')
-                    ? darkMode
-                      ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30 scale-105'
-                      : 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/20 scale-105'
-                    : darkMode
-                      ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:scale-105'
-                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:scale-105'
-                    }`}
+                  onClick={handleAddFriend}
+                  className="px-4 py-2 bg-purple-500 text-white rounded-xl font-semibold hover:bg-purple-600 transition-colors"
                 >
-                  Me
-                </button>
-                {friends.map(friend => (
-                  <button
-                    key={friend._id}
-                    onClick={() => toggleFriend(friend.name)}
-                    className={`h-12 px-6 rounded-2xl text-sm font-semibold transition-all duration-300 flex items-center justify-center ${selectedFriends.includes(friend.name)
-                      ? darkMode
-                        ? 'bg-gradient-to-r from-emerald-500 to-teal-500 text-white shadow-lg shadow-emerald-500/30 scale-105'
-                        : 'bg-gradient-to-r from-emerald-400 to-teal-500 text-white shadow-lg shadow-emerald-500/20 scale-105'
-                      : darkMode
-                        ? 'bg-slate-700/50 text-slate-300 hover:bg-slate-700 hover:scale-105'
-                        : 'bg-slate-100 text-slate-700 hover:bg-slate-200 hover:scale-105'
-                      }`}
-                  >
-                    {friend.name}
-                  </button>
-                ))}
-                <button
-                  onClick={() => setShowAddFriend(!showAddFriend)}
-                  className={`h-12 w-12 rounded-2xl flex items-center justify-center transition-all hover:scale-110 ${darkMode
-                    ? 'bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-white'
-                    : 'bg-slate-100 text-slate-400 hover:bg-slate-200 hover:text-slate-600'
-                    }`}>
-                  <Plus size={20} />
+                  Add
                 </button>
               </div>
+            )}
 
-              {showAddFriend && (
-                <div className="mt-4 flex gap-2 animate-fade-in">
-                  <input
-                    type="text"
-                    value={newFriendName}
-                    onChange={(e) => setNewFriendName(e.target.value)}
-                    placeholder="Friend's Name"
-                    className={`flex-1 p-3 rounded-xl outline-none transition-all ${darkMode ? 'bg-slate-700/50 text-white border border-slate-600' : 'bg-slate-50 text-slate-900 border border-slate-200'}`}
-                    onKeyDown={(e) => e.key === 'Enter' && handleAddFriend(e)}
-                  />
-                  <button
-                    onClick={handleAddFriend}
-                    className="px-6 py-3 bg-emerald-500 text-white rounded-xl font-semibold hover:bg-emerald-600 transition-colors"
+            <div className="flex flex-wrap gap-3">
+              {friends.length === 0 ? (
+                <p className={`text-sm w-full text-center py-4 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                  No friends added yet. Start building your circle!
+                </p>
+              ) : (
+                friends.map(friend => (
+                  <div
+                    key={friend._id}
+                    onClick={() => toggleFriend(friend.name)}
+                    className={`group relative flex flex-col items-center gap-2 p-3 rounded-2xl transition-all cursor-pointer hover:scale-105 ${selectedFriends.includes(friend.name)
+                      ? darkMode
+                        ? 'bg-emerald-500/20 ring-2 ring-emerald-500'
+                        : 'bg-emerald-100 ring-2 ring-emerald-500'
+                      : darkMode
+                        ? 'bg-slate-700/30 hover:bg-slate-700/50'
+                        : 'bg-slate-50 hover:bg-slate-100'
+                      }`}
                   >
-                    Add
-                  </button>
-                </div>
+                    <div className={`w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold ${darkMode
+                      ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/20'
+                      : 'bg-gradient-to-br from-purple-400 to-pink-400 text-white shadow-lg shadow-purple-500/10'}`}>
+                      {friend.name.charAt(0)}
+                    </div>
+                    <span className={`text-xs font-medium ${darkMode ? 'text-slate-300' : 'text-slate-600'}`}>
+                      {friend.name}
+                    </span>
+                    {selectedFriends.includes(friend.name) && (
+                      <div className="absolute -top-1 -right-1 w-5 h-5 bg-emerald-500 rounded-full flex items-center justify-center text-white text-xs border-2 border-white dark:border-slate-800">
+                        ✓
+                      </div>
+                    )}
+                  </div>
+                ))
               )}
             </div>
           </div>
 
-          {billAmount && selectedFriends.length > 0 && (
-            <div className={`p-5 rounded-2xl transition-all duration-300 animate-fade-in ${darkMode
-              ? 'bg-gradient-to-r from-emerald-500/20 to-teal-500/20 border border-emerald-500/30'
-              : 'bg-gradient-to-r from-emerald-100 to-teal-100 border border-emerald-200'
-              }`}>
-              <div className="flex justify-between items-center">
-                <span className={`text-sm font-semibold ${darkMode ? 'text-emerald-300' : 'text-emerald-800'}`}>
-                  Each person pays
-                </span>
-                <span className={`text-3xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                  ${(parseFloat(billAmount) / selectedFriends.length).toFixed(2)}
-                </span>
+
+          {/* RECENT SPLITS */}
+          <div className="space-y-4">
+            <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+              Recent Splits
+            </h3>
+
+            {splitHistory.length === 0 ? (
+              <div className={`text-center py-16 rounded-3xl border-2 border-dashed transition-all ${darkMode
+                ? 'bg-slate-800/20 border-slate-700'
+                : 'bg-slate-50 border-slate-200'
+                }`}>
+                <Users className={`mx-auto mb-4 ${darkMode ? 'text-slate-600' : 'text-slate-300'}`} size={48} />
+                <p className={`text-lg font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                  No bills split yet
+                </p>
+                <p className={`text-sm mt-2 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
+                  Create your first split expense
+                </p>
               </div>
-            </div>
-          )}
-
-          <button
-            onClick={handleSplit}
-            disabled={!billAmount || selectedFriends.length === 0}
-            className={`w-full py-4 rounded-2xl font-bold transition-all duration-300 ${!billAmount || selectedFriends.length === 0
-              ? 'opacity-50 cursor-not-allowed bg-slate-400 text-white'
-              : darkMode
-                ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/30 hover:scale-105'
-                : 'bg-gradient-to-r from-purple-500 to-pink-500 text-white shadow-lg shadow-purple-500/20 hover:scale-105'
-              }`}
-          >
-            Split Expense
-          </button>
-        </div>
-
-
-        {/* RECENT SPLITS */}
-        <div className="space-y-4">
-          <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-            Recent Splits
-          </h3>
-
-          {splitHistory.length === 0 ? (
-            <div className={`text-center py-16 rounded-3xl border-2 border-dashed transition-all ${darkMode
-              ? 'bg-slate-800/20 border-slate-700'
-              : 'bg-slate-50 border-slate-200'
-              }`}>
-              <Users className={`mx-auto mb-4 ${darkMode ? 'text-slate-600' : 'text-slate-300'}`} size={48} />
-              <p className={`text-lg font-medium ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                No bills split yet
-              </p>
-              <p className={`text-sm mt-2 ${darkMode ? 'text-slate-500' : 'text-slate-400'}`}>
-                Create your first split expense
-              </p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {splitHistory.map((split, index) => (
-                <div
-                  key={split.id}
-                  className={`rounded-3xl p-6 backdrop-blur-lg transition-all duration-300 hover:scale-102 ${darkMode
-                    ? "bg-slate-800/40 border border-slate-700/50"
-                    : "bg-white/80 shadow-xl"
-                    }`}
-                  style={{ animationDelay: `${index * 100}ms` }}
-                >
-                  <div className="flex justify-between items-start mb-4">
-                    <div>
-                      <h4 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-                        {split.description}
-                      </h4>
-                      <div className="flex items-center gap-2 mt-1">
-                        <Calendar size={14} className={darkMode ? 'text-slate-500' : 'text-slate-400'} />
-                        <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
-                          {split.date}
-                        </p>
+            ) : (
+              <div className="space-y-4">
+                {splitHistory.map((split, index) => (
+                  <div
+                    key={split.id}
+                    className={`rounded-3xl p-6 backdrop-blur-lg transition-all duration-300 hover:scale-102 ${darkMode
+                      ? "bg-slate-800/40 border border-slate-700/50"
+                      : "bg-white/80 shadow-xl"
+                      }`}
+                    style={{ animationDelay: `${index * 100}ms` }}
+                  >
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h4 className={`font-bold text-lg ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+                          {split.description}
+                        </h4>
+                        <div className="flex items-center gap-2 mt-1">
+                          <Calendar size={14} className={darkMode ? 'text-slate-500' : 'text-slate-400'} />
+                          <p className={`text-sm ${darkMode ? 'text-slate-400' : 'text-slate-500'}`}>
+                            {split.date}
+                          </p>
+                        </div>
                       </div>
+                      <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
+                        ₹{split.total.toFixed(2)}
+                      </span>
                     </div>
-                    <span className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
-                      ${split.total.toFixed(2)}
-                    </span>
-                  </div>
 
-                  <div className="flex -space-x-3 py-3">
-                    {split.people.map((p, i) => (
-                      <div
-                        key={i}
-                        className={`inline-flex h-10 w-10 rounded-full ring-4 items-center justify-center text-sm font-bold transition-transform hover:scale-110 ${darkMode
-                          ? 'bg-gradient-to-br from-purple-500 to-pink-500 text-white ring-slate-800'
-                          : 'bg-gradient-to-br from-purple-400 to-pink-400 text-white ring-white'
-                          }`}
-                        title={p}
-                      >
-                        {p.charAt(0)}
-                      </div>
-                    ))}
-                  </div>
+                    <div className="flex flex-wrap gap-2 py-3">
+                      {split.people.map((p, i) => (
+                        <span
+                          key={i}
+                          className={`text-xs px-2 py-1 rounded-lg font-medium ${darkMode
+                            ? 'bg-slate-700 text-slate-300'
+                            : 'bg-slate-100 text-slate-600'
+                            }`}
+                        >
+                          {p}
+                        </span>
+                      ))}
+                    </div>
 
-                  <div className={`mt-4 pt-4 border-t flex justify-between items-center ${darkMode ? 'border-slate-700' : 'border-slate-100'
-                    }`}>
-                    <span className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
-                      Per person
-                    </span>
-                    <span className={`text-xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
-                      ${split.perPerson.toFixed(2)}
-                    </span>
+                    <div className={`mt-4 pt-4 border-t flex justify-between items-center ${darkMode ? 'border-slate-700' : 'border-slate-100'
+                      }`}>
+                      <span className={`text-sm font-medium ${darkMode ? 'text-slate-400' : 'text-slate-600'}`}>
+                        Per person
+                      </span>
+                      <span className={`text-xl font-bold ${darkMode ? 'text-emerald-400' : 'text-emerald-600'}`}>
+                        ₹{split.perPerson.toFixed(2)} / person                     </span>
+                    </div>
                   </div>
-                </div>
-              ))}
-            </div>
-          )}
+                ))}
+              </div>
+            )}
+          </div>
         </div>
       </div>
 
