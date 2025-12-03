@@ -210,6 +210,8 @@ const App = () => {
               darkMode={darkMode}
               setDarkMode={setDarkMode}
               onLogout={handleLogout}
+              transactions={transactions}
+              savings={savings}
             >
               <Transactions
                 transactions={transactions}
@@ -235,6 +237,8 @@ const App = () => {
               darkMode={darkMode}
               setDarkMode={setDarkMode}
               onLogout={handleLogout}
+              transactions={transactions}
+              savings={savings}
             >
               <Savings
                 savings={savings}
@@ -259,6 +263,8 @@ const App = () => {
               darkMode={darkMode}
               setDarkMode={setDarkMode}
               onLogout={handleLogout}
+              transactions={transactions}
+              savings={savings}
             >
               <SplitBill
                 darkMode={darkMode}

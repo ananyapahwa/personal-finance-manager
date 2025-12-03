@@ -20,31 +20,28 @@ export function AddTransaction({
 
   return (
     <div
-      className={`rounded-3xl p-6 transition-all backdrop-blur-xl max-w-xl ${
-        darkMode
+      className={`rounded-3xl p-6 transition-all backdrop-blur-xl max-w-xl ${darkMode
           ? "bg-slate-800/40 border border-slate-700/50"
           : "bg-white/90 shadow-xl"
-      }`}
+        }`}
     >
       {/* HEADER */}
       <div className="flex justify-between items-center mb-6">
         <h2
-          className={`text-2xl font-bold bg-gradient-to-r ${
-            darkMode
+          className={`text-2xl font-bold bg-gradient-to-r ${darkMode
               ? "from-purple-400 via-pink-400 to-blue-400"
               : "from-purple-600 via-pink-600 to-blue-600"
-          } bg-clip-text text-transparent`}
+            } bg-clip-text text-transparent`}
         >
           Add Transaction
         </h2>
 
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className={`px-3 py-2 rounded-xl transition-all ${
-            darkMode
+          className={`px-3 py-2 rounded-xl transition-all ${darkMode
               ? "bg-slate-700/50 text-yellow-400"
               : "bg-white/80 text-slate-700 shadow-md"
-          }`}
+            }`}
         >
           {darkMode ? "☀️" : "🌙"}
         </button>
@@ -56,11 +53,10 @@ export function AddTransaction({
         <select
           value={type}
           onChange={(e) => setType(e.target.value)}
-          className={`p-3 rounded-xl transition-all ${
-            darkMode
+          className={`p-3 rounded-xl transition-all ${darkMode
               ? "bg-slate-700/30 border border-slate-600 text-white"
               : "bg-slate-50 border border-slate-200"
-          }`}
+            }`}
         >
           <option value="expense">Expense</option>
           <option value="saving">Saving</option>
@@ -70,16 +66,16 @@ export function AddTransaction({
         <select
           value={category}
           onChange={(e) => setCategory(e.target.value)}
-          className={`p-3 rounded-xl transition-all ${
-            darkMode
+          className={`p-3 rounded-xl transition-all ${darkMode
               ? "bg-slate-700/30 border border-slate-600 text-white"
               : "bg-slate-50 border border-slate-200"
-          }`}
+            }`}
         >
           <option>Food</option>
           <option>Travel</option>
           <option>Shopping</option>
           <option>Health</option>
+          <option>Work</option>
           <option>Other</option>
         </select>
 
@@ -89,11 +85,10 @@ export function AddTransaction({
           value={amount}
           onChange={(e) => setAmount(e.target.value)}
           placeholder="Amount"
-          className={`p-3 rounded-xl transition-all ${
-            darkMode
+          className={`p-3 rounded-xl transition-all ${darkMode
               ? "bg-slate-700/30 border border-slate-600 text-white"
               : "bg-slate-50 border border-slate-200"
-          }`}
+            }`}
         />
 
         {/* DESCRIPTION */}
@@ -101,11 +96,10 @@ export function AddTransaction({
           value={desc}
           onChange={(e) => setDesc(e.target.value)}
           placeholder="Description"
-          className={`p-3 rounded-xl transition-all ${
-            darkMode
+          className={`p-3 rounded-xl transition-all ${darkMode
               ? "bg-slate-700/30 border border-slate-600 text-white"
               : "bg-slate-50 border border-slate-200"
-          }`}
+            }`}
         />
 
         {/* BUTTON */}

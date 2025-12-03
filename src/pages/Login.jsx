@@ -173,9 +173,9 @@ const Login = ({ onLogin, darkMode, toggleTheme }) => {
                   </div>
                 </div>
 
-                {/* Remember Me & Forgot Password */}
+                {/* Remember Me */}
                 {isLogin && (
-                  <div className="flex items-center justify-between">
+                  <div className="flex items-center">
                     <label className="flex items-center cursor-pointer group">
                       <input
                         type="checkbox"
@@ -185,9 +185,6 @@ const Login = ({ onLogin, darkMode, toggleTheme }) => {
                       />
                       <span className="ml-2 text-sm text-slate-600 dark:text-slate-400 group-hover:text-slate-800 dark:group-hover:text-slate-200 transition-colors">Remember me</span>
                     </label>
-                    <a href="#" className="text-sm font-semibold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent hover:from-purple-700 hover:to-pink-700 transition-all">
-                      Forgot Password?
-                    </a>
                   </div>
                 )}
 

@@ -152,8 +152,10 @@ const Dashboard = ({ transactions, savings, darkMode, setDarkMode }) => {
               <h3 className={`text-xl font-bold ${darkMode ? 'text-white' : 'text-slate-800'}`}>
                 Recent Transactions
               </h3>
-              <button className={`p-2 rounded-xl transition-all hover:scale-110 ${darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'
-                }`}>
+              <button
+                onClick={() => navigate('/transactions')}
+                className={`p-2 rounded-xl transition-all hover:scale-110 ${darkMode ? 'bg-purple-500/20 text-purple-400' : 'bg-purple-100 text-purple-600'
+                  }`}>
                 <Plus size={20} />
               </button>
             </div>
