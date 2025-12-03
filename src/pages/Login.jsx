@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import { IndianRupee, User, Mail, Lock, Eye, EyeOff, Sun, Moon } from 'lucide-react';
+import { IndianRupee, User, Mail, Lock, Eye, EyeOff } from 'lucide-react';
 
-const Login = ({ onLogin, darkMode, toggleTheme }) => {
+const Login = ({ onLogin }) => {
   const [isLogin, setIsLogin] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const [rememberMe, setRememberMe] = useState(false);
@@ -90,13 +90,6 @@ const Login = ({ onLogin, darkMode, toggleTheme }) => {
           <div className="p-12 flex flex-col justify-center bg-white dark:bg-slate-900 animate-slideInRight transition-colors duration-300 relative">
 
             {/* Theme Toggle */}
-            <button
-              onClick={toggleTheme}
-              className="absolute top-8 right-8 p-3 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-colors"
-            >
-              {darkMode ? <Sun size={20} /> : <Moon size={20} />}
-            </button>
-
             <div className="max-w-md mx-auto w-full">
               <h2 className="text-4xl font-bold bg-gradient-to-r from-pink-500 to-purple-600 bg-clip-text text-transparent mb-3">
                 {isLogin ? 'Welcome Back' : 'Create Account'}

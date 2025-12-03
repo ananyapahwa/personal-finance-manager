@@ -164,8 +164,6 @@ const App = () => {
           ) : (
             <Login
               onLogin={handleLogin}
-              darkMode={darkMode}
-              toggleTheme={() => setDarkMode(!darkMode)}
             />
           )
         }
