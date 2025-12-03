@@ -8,7 +8,7 @@ const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMo
   const [newTx, setNewTx] = useState({
     title: '',
     amount: '',
-    category: 'food',
+    category: 'work',
     type: 'expense'
   });
 
@@ -38,7 +38,7 @@ const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMo
       });
 
       if (response.ok) {
-        setNewTx({ title: '', amount: '', category: 'food', type: 'expense' });
+        setNewTx({ title: '', amount: '', category: 'work', type: 'expense' });
         fetchTransactions();
       }
     } catch (error) {

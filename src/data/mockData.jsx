@@ -4,6 +4,7 @@ export const CATEGORIES = [
   { id: 'housing', name: 'Housing', color: 'bg-purple-100 text-purple-600' },
   { id: 'entertainment', name: 'Entertainment', color: 'bg-pink-100 text-pink-600' },
   { id: 'shopping', name: 'Shopping', color: 'bg-teal-100 text-teal-600' },
+  { id: 'work', name: 'Work', color: 'bg-indigo-100 text-indigo-600' },
 ];
 
 export const INITIAL_TRANSACTIONS = [
