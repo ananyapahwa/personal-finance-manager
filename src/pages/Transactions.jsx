@@ -9,7 +9,7 @@ const Transactions = ({ transactions, setTransactions, fetchTransactions, darkMo
     title: '',
     amount: '',
     category: 'work',
-    type: 'expense'
+    type: 'income'
   });
 
   useEffect(() => {
