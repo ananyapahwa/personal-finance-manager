@@ -163,10 +163,4 @@ graph TD
 5.  **Bill Management**: Handles splitting bills among friends. It interacts with the **Bill Database** and references the **Friend Database**.
 
 
-## 📸 Screenshots
 
-*(Add screenshots of your application here)*
-
----
-
-Made with ❤️ by [Your Name]
